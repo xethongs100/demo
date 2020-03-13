@@ -1,0 +1,29 @@
+public function sendMail(Request $request)
+    {
+        if(!empty($request->email)){
+            if(empty($request->email_cc)){
+                $sendMail = ['email'=>$request->email];
+                Mail::send('settings::admin.settings.send_mail.sendMail',$sendMail,
+                    function($messenger) use ($sendMail){
+                        $messenger->to($sendMail["email"],'admin')->subject('Information from Japana Vietnam Co.Ltd');
+                });
+                return back()->with('success','Send Mail Success');      
+            }else{
+                if(empty($request->email_bcc)){
+                    Mail::to($request->email)
+                    ->cc($request->email_cc)
+                    ->send(new SendMail($request->email,'responseMail'));
+                    return back()->with('success','Send Mail Success');
+                }else{
+                    Mail::to($request->email)
+                    ->cc($request->email_cc)
+                    ->bcc($request->email_bcc)
+                    ->send(new SendMail($request->email,'responseMail'));
+                    return back()->with('success','Send Mail Success');
+                }
+            }
+        }
+        else{
+            return back()->with('success','Send Mail Fail');
+        }
+    }
