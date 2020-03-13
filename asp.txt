@@ -1,0 +1,3 @@
+connect sql aspx:
+add->data
+control datalist -> tao ra the table -> ch?n columb cho table (repeatcolumb ch?nh cho d? li?u n?m theo hàng c?t)
